@@ -1,4 +1,4 @@
-# 🏦 Agentic SDLC Harness — Banking Account Opening
+﻿# 🏦 Agentic SDLC Harness — Banking Account Opening
 
 > **Demo de Spec-Driven Development (SDD) y Spec-Driven Architecture (SDA)**  
 > usando **GitHub Spec Kit** + **GitHub Copilot Agents** para cubrir el ciclo de vida 
@@ -58,34 +58,34 @@ El harness toma esta necesidad de negocio y, paso a paso, produce:
 ```mermaid
 flowchart TD
     subgraph SETUP["⚙️ SETUP — Inicialización del proyecto"]
-        INIT["🚀 specify init\nInicializa Spec Kit en el repo"]
-        CONST["📜 speckit.constitution\nDefine principios: Security-First, KYC/AML"]
+        INIT["🚀 specify init<br/>Inicializa Spec Kit en el repo"]
+        CONST["📜 speckit.constitution<br/>Define principios: Security-First, KYC/AML"]
     end
 
     subgraph PHASE1["📋 FASE 1 — Especificación funcional"]
-        SPEC["📝 speckit.specify\nGenera spec.md con requisitos"]
-        CLARIFY["🔍 speckit.clarify\nResuelve ambigüedades del spec"]
-        SA["📄 spec.md\nEspecificación aprobada"]
-        G1{"✅ Gate 1\n¿Spec completo?"}
+        SPEC["📝 speckit.specify<br/>Genera spec.md con requisitos"]
+        CLARIFY["🔍 speckit.clarify<br/>Resuelve ambigüedades del spec"]
+        SA["📄 spec.md<br/>Especificación aprobada"]
+        G1{"✅ Gate 1<br/>¿Spec completo?"}
     end
 
     subgraph PHASE2["🏗️ FASE 2 — Arquitectura técnica"]
-        PLAN["🏛️ speckit.plan\nDiseña arquitectura trazable al spec"]
-        CHECK["☑️ speckit.checklist\nValida calidad del plan"]
-        ANALYZE["🔎 speckit.analyze\nDetecta brechas spec ↔ plan"]
-        PA["📄 plan.md\nPlan de arquitectura aprobado"]
-        G2{"✅ Gate 2\n¿Sin gaps críticos?"}
+        PLAN["🏛️ speckit.plan<br/>Diseña arquitectura trazable al spec"]
+        CHECK["☑️ speckit.checklist<br/>Valida calidad del plan"]
+        ANALYZE["🔎 speckit.analyze<br/>Detecta brechas spec ↔ plan"]
+        PA["📄 plan.md<br/>Plan de arquitectura aprobado"]
+        G2{"✅ Gate 2<br/>¿Sin gaps críticos?"}
     end
 
     subgraph PHASE3["💻 FASE 3 — Implementación"]
-        TASKS["📋 speckit.tasks\nGenera tareas ordenadas por dependencia"]
-        IMPL["⚙️ speckit.implement\nGenera código Angular + OpenAPI"]
-        CONV["🔄 speckit.converge\nVerifica completitud de todas las tareas"]
-        CA["📦 tasks.md + src/\nCódigo y contrato API generados"]
-        G3{"✅ Gate 3\n¿Convergencia limpia?"}
+        TASKS["📋 speckit.tasks<br/>Genera tareas ordenadas por dependencia"]
+        IMPL["⚙️ speckit.implement<br/>Genera código Angular + OpenAPI"]
+        CONV["🔄 speckit.converge<br/>Verifica completitud de todas las tareas"]
+        CA["📦 tasks.md + src/<br/>Código y contrato API generados"]
+        G3{"✅ Gate 3<br/>¿Convergencia limpia?"}
     end
 
-    PR["🎉 PR listo\nTrazabilidad completa negocio → código"]
+    PR["🎉 PR listo<br/>Trazabilidad completa negocio → código"]
 
     INIT --> CONST
     CONST --> SPEC
@@ -447,57 +447,57 @@ src/
 
 ```mermaid
 flowchart TD
-    USER["👤 Usuario\nEscribe la necesidad de negocio"]
-    ORCH["🎛️ banking-harness-agent\nOrquestador: detecta fase, coordina y verifica gates"]
+    USER["👤 Usuario<br/>Escribe la necesidad de negocio"]
+    ORCH["🎛️ banking-harness-agent<br/>Orquestador: detecta fase, coordina y verifica gates"]
 
     subgraph F1["📋 FASE 1 — Requirements"]
-        REQ["📋 banking-requirements-agent\nCaptura la necesidad de negocio bancaria"]
-        SK1(["🔧 #enrich-banking-spec\nTransforma descripción cruda → input con KYC/AML/GDPR"])
-        SPECIFY["📝 /speckit.specify\nGenera spec.md estructurado desde descripción enriquecida"]
-        SK1B(["🔧 #validate-compliance-coverage\nVerifica cobertura KYC, AML, PCI-DSS, GDPR"])
-        CLARIFY["🔍 /speckit.clarify\nResuelve ambigüedades de compliance en el spec"]
-        A1["📄 spec.md\nEspecificación funcional completa"]
-        G1{"✅ Gate 1\n¿Compliance PASS?"}
+        REQ["📋 banking-requirements-agent<br/>Captura la necesidad de negocio bancaria"]
+        SK1(["🔧 #enrich-banking-spec<br/>Transforma descripción cruda → input con KYC/AML/GDPR"])
+        SPECIFY["📝 /speckit.specify<br/>Genera spec.md estructurado desde descripción enriquecida"]
+        SK1B(["🔧 #validate-compliance-coverage<br/>Verifica cobertura KYC, AML, PCI-DSS, GDPR"])
+        CLARIFY["🔍 /speckit.clarify<br/>Resuelve ambigüedades de compliance en el spec"]
+        A1["📄 spec.md<br/>Especificación funcional completa"]
+        G1{"✅ Gate 1<br/>¿Compliance PASS?"}
     end
 
     subgraph F2["🏗️ FASE 2 — Architecture"]
-        ARC["🏛️ banking-architect-agent\nDiseña arquitectura trazable al spec (SDA)"]
-        SK2(["🔧 #validate-compliance-coverage\nConfirma KYC/AML/GDPR antes de diseñar"])
-        SK2B(["🔧 #classify-pii-fields\nClasifica campos PII / sensible / público"])
-        PLAN["📐 /speckit.plan\nGenera plan.md con arquitectura bancaria"]
-        CHECK["☑️ /speckit.checklist\nValida calidad del plan de arquitectura"]
-        ANALYZE["🔎 /speckit.analyze\nDetecta brechas entre spec y plan"]
-        A2["📄 plan.md + analysis.md\nArquitectura aprobada sin gaps críticos"]
-        G2{"✅ Gate 2\n¿Sin gaps críticos?"}
+        ARC["🏛️ banking-architect-agent<br/>Diseña arquitectura trazable al spec (SDA)"]
+        SK2(["🔧 #validate-compliance-coverage<br/>Confirma KYC/AML/GDPR antes de diseñar"])
+        SK2B(["🔧 #classify-pii-fields<br/>Clasifica campos PII / sensible / público"])
+        PLAN["📐 /speckit.plan<br/>Genera plan.md con arquitectura bancaria"]
+        CHECK["☑️ /speckit.checklist<br/>Valida calidad del plan de arquitectura"]
+        ANALYZE["🔎 /speckit.analyze<br/>Detecta brechas entre spec y plan"]
+        A2["📄 plan.md + analysis.md<br/>Arquitectura aprobada sin gaps críticos"]
+        G2{"✅ Gate 2<br/>¿Sin gaps críticos?"}
     end
 
     subgraph F3["💻 FASE 3 — Development"]
-        DEV["💻 banking-developer-agent\nImplementa el código Angular y el contrato API"]
-        SK3(["🔧 #classify-pii-fields\nDefine campos excluidos de logs y respuestas"])
-        TASKS["📋 /speckit.tasks\nGenera tareas ordenadas por dependencia"]
-        IMPL["⚙️ /speckit.implement\nGenera código Angular + OpenAPI"]
-        CONV["🔄 /speckit.converge\nVerifica completitud de todas las tareas"]
-        A3["📦 tasks.md + src/\nCódigo Angular + OpenAPI generados"]
-        G3{"✅ Gate 3\n¿Convergencia limpia?"}
+        DEV["💻 banking-developer-agent<br/>Implementa el código Angular y el contrato API"]
+        SK3(["🔧 #classify-pii-fields<br/>Define campos excluidos de logs y respuestas"])
+        TASKS["📋 /speckit.tasks<br/>Genera tareas ordenadas por dependencia"]
+        IMPL["⚙️ /speckit.implement<br/>Genera código Angular + OpenAPI"]
+        CONV["🔄 /speckit.converge<br/>Verifica completitud de todas las tareas"]
+        A3["📦 tasks.md + src/<br/>Código Angular + OpenAPI generados"]
+        G3{"✅ Gate 3<br/>¿Convergencia limpia?"}
     end
 
     subgraph F4["🧪 FASE 4 — Testing"]
-        TST["🧪 banking-tester-agent\nGenera tests derivados del spec y compliance"]
-        SK4(["🔧 #validate-compliance-coverage\nExtrae escenarios KYC/AML/GDPR como tests obligatorios"])
-        A4["📄 coverage-report.md\nCobertura ≥ 80% + matriz spec ↔ tests"]
-        G4{"✅ Gate 4\n¿Cobertura suficiente?"}
+        TST["🧪 banking-tester-agent<br/>Genera tests derivados del spec y compliance"]
+        SK4(["🔧 #validate-compliance-coverage<br/>Extrae escenarios KYC/AML/GDPR como tests obligatorios"])
+        A4["📄 coverage-report.md<br/>Cobertura ≥ 80% + matriz spec ↔ tests"]
+        G4{"✅ Gate 4<br/>¿Cobertura suficiente?"}
     end
 
     subgraph F5["🔒 FASE 5 — Security Review"]
-        SEC["🔒 banking-security-agent\nAudita OWASP Top 10, PCI-DSS, GDPR, KYC/AML"]
-        SK5(["🔧 #validate-compliance-coverage\nObtiene línea base regulatoria completa"])
-        SK5B(["🔧 #classify-pii-fields\nVerifica encriptación y ausencia de PII en logs"])
-        CONV2["🔄 /speckit.converge\nConvergencia final antes del PR"]
-        A5["📄 security-report.md\n🔴 CRITICAL / 🟠 HIGH / 🟡 MEDIUM / 🔵 LOW"]
-        G5{"✅ Gate 5\n¿Sin hallazgos CRITICAL?"}
+        SEC["🔒 banking-security-agent<br/>Audita OWASP Top 10, PCI-DSS, GDPR, KYC/AML"]
+        SK5(["🔧 #validate-compliance-coverage<br/>Obtiene línea base regulatoria completa"])
+        SK5B(["🔧 #classify-pii-fields<br/>Verifica encriptación y ausencia de PII en logs"])
+        CONV2["🔄 /speckit.converge<br/>Convergencia final antes del PR"]
+        A5["📄 security-report.md<br/>🔴 CRITICAL / 🟠 HIGH / 🟡 MEDIUM / 🔵 LOW"]
+        G5{"✅ Gate 5<br/>¿Sin hallazgos CRITICAL?"}
     end
 
-    PR["🎉 PR Listo\nTrazabilidad completa: negocio → spec → arquitectura → código → tests → seguridad"]
+    PR["🎉 PR Listo<br/>Trazabilidad completa: negocio → spec → arquitectura → código → tests → seguridad"]
 
     USER --> ORCH
     ORCH --> REQ
