@@ -49,15 +49,11 @@ governance rules and compliance requirements.
 
 Given a business need in the banking domain, you must:
 
-1. **Run `/speckit.specify`** to create a structured feature specification
-2. **Enrich the spec** with banking domain knowledge:
-   - KYC (Know Your Customer) requirements
-   - AML (Anti-Money Laundering) controls
-   - PCI-DSS data protection rules
-   - Regulatory compliance constraints
-   - Digital identity verification flows
-3. **Run `/speckit.clarify`** to resolve any open compliance questions
-4. Produce a spec ready for architecture design
+1. **Run `#enrich-banking-spec`** on the raw business description to produce a compliance-enriched input
+2. **Run `/speckit.specify`** using the enriched description to create the structured spec
+3. **Run `#validate-compliance-coverage`** on the generated `spec.md` to verify KYC/AML/GDPR coverage
+4. **Run `/speckit.clarify`** to resolve any open compliance questions flagged in the spec
+5. Produce a spec ready for architecture design
 
 ---
 
@@ -97,15 +93,17 @@ Customer Intent → Identity Capture → Document Verification (KYC)
 ## Execution Steps
 
 1. Load `.specify/memory/constitution.md`
-2. Invoke `/speckit.specify` with the banking feature description
-3. Validate the generated spec includes:
+2. Run **`#enrich-banking-spec`** on the raw business description
+3. Run **`/speckit.specify`** using the enriched description as input
+4. Validate the generated spec includes:
    - [ ] Compliance requirements section
    - [ ] KYC/AML checks defined
    - [ ] Data privacy rules documented
    - [ ] Audit trail requirements specified
    - [ ] Error/rejection flows covered
-4. If compliance sections are missing or ambiguous, invoke `/speckit.clarify`
-5. Hand off to `banking-architect-agent` when spec is complete
+5. Run **`#validate-compliance-coverage`** on the generated `spec.md`
+6. If compliance sections are missing or ambiguous, run **`/speckit.clarify`**
+7. Hand off to `banking-architect-agent` when spec is complete and Gate 1 passes
 
 ---
 

@@ -55,10 +55,12 @@ Always load `.specify/memory/constitution.md` before designing.
 
 Given a completed `spec.md`, you must:
 
-1. **Run `/speckit.plan`** with the banking tech stack
-2. **Run `/speckit.checklist`** to validate architecture quality
-3. **Run `/speckit.analyze`** to check spec-plan consistency
-4. Produce an architecture ready for task breakdown and implementation
+1. **Run `#validate-compliance-coverage`** on `spec.md` to confirm all KYC/AML/GDPR requirements before designing
+2. **Run `#classify-pii-fields`** on all data models to define encryption, retention, and logging boundaries
+3. **Run `/speckit.plan`** with the banking tech stack, incorporating the classification results
+4. **Run `/speckit.checklist`** to validate architecture quality
+5. **Run `/speckit.analyze`** to check spec-plan consistency
+6. Produce an architecture ready for task breakdown and implementation
 
 ---
 
@@ -117,17 +119,19 @@ Given a completed `spec.md`, you must:
 ## Execution Steps
 
 1. Load `specs/<NNN>-<feature>/spec.md` and `constitution.md`
-2. Invoke `/speckit.plan <banking tech stack description>`
-3. Verify plan covers:
+2. Run **`#validate-compliance-coverage`** on `spec.md` — all ❌ FAIL items must be addressed in the plan
+3. Run **`#classify-pii-fields`** on all data models — use the output to define encryption, retention, and logging rules
+4. Run **`/speckit.plan`** with the banking tech stack description
+5. Verify plan covers:
    - [ ] Authentication and authorization design
    - [ ] KYC/AML integration points
    - [ ] Data encryption at rest and transit
    - [ ] Audit trail storage design
    - [ ] Error handling and rejection flows
    - [ ] Performance and scalability targets
-4. Invoke `/speckit.checklist` to validate architecture quality
-5. Invoke `/speckit.analyze` to detect spec-plan gaps
-6. Hand off to `banking-developer-agent` when analysis passes
+6. Run **`/speckit.checklist`** to validate architecture quality
+7. Run **`/speckit.analyze`** to detect spec-plan gaps
+8. Hand off to `banking-developer-agent` when Gate 2 passes (no critical gaps)
 
 ---
 

@@ -52,6 +52,86 @@ El harness toma esta necesidad de negocio y, paso a paso, produce:
 
 ---
 
+## 🔄 Flujo Típico de Spec Kit
+
+
+```mermaid
+flowchart TD
+    subgraph SETUP["⚙️ SETUP — Inicialización del proyecto"]
+        INIT["🚀 specify init\nInicializa Spec Kit en el repo"]
+        CONST["📜 speckit.constitution\nDefine principios: Security-First, KYC/AML"]
+    end
+
+    subgraph PHASE1["📋 FASE 1 — Especificación funcional"]
+        SPEC["📝 speckit.specify\nGenera spec.md con requisitos"]
+        CLARIFY["🔍 speckit.clarify\nResuelve ambigüedades del spec"]
+        SA["📄 spec.md\nEspecificación aprobada"]
+        G1{"✅ Gate 1\n¿Spec completo?"}
+    end
+
+    subgraph PHASE2["🏗️ FASE 2 — Arquitectura técnica"]
+        PLAN["🏛️ speckit.plan\nDiseña arquitectura trazable al spec"]
+        CHECK["☑️ speckit.checklist\nValida calidad del plan"]
+        ANALYZE["🔎 speckit.analyze\nDetecta brechas spec ↔ plan"]
+        PA["📄 plan.md\nPlan de arquitectura aprobado"]
+        G2{"✅ Gate 2\n¿Sin gaps críticos?"}
+    end
+
+    subgraph PHASE3["💻 FASE 3 — Implementación"]
+        TASKS["📋 speckit.tasks\nGenera tareas ordenadas por dependencia"]
+        IMPL["⚙️ speckit.implement\nGenera código Angular + OpenAPI"]
+        CONV["🔄 speckit.converge\nVerifica completitud de todas las tareas"]
+        CA["📦 tasks.md + src/\nCódigo y contrato API generados"]
+        G3{"✅ Gate 3\n¿Convergencia limpia?"}
+    end
+
+    PR["🎉 PR listo\nTrazabilidad completa negocio → código"]
+
+    INIT --> CONST
+    CONST --> SPEC
+    SPEC --> CLARIFY
+    CLARIFY --> SA
+    SA --> G1
+    G1 -->|"❌ incompleto"| CLARIFY
+    G1 -->|"✅ aprobado"| PLAN
+    PLAN --> CHECK
+    CHECK --> ANALYZE
+    ANALYZE --> PA
+    PA --> G2
+    G2 -->|"❌ gaps"| PLAN
+    G2 -->|"✅ ok"| TASKS
+    TASKS --> IMPL
+    IMPL --> CONV
+    CONV --> CA
+    CA --> G3
+    G3 -->|"❌ pendientes"| IMPL
+    G3 -->|"✅ completo"| PR
+
+    style INIT fill:#1e3a5f,stroke:#38bdf8,color:#e0f2fe
+    style CONST fill:#1e3a5f,stroke:#38bdf8,color:#e0f2fe
+    style SPEC fill:#064e3b,stroke:#34d399,color:#d1fae5
+    style CLARIFY fill:#064e3b,stroke:#34d399,color:#d1fae5
+    style SA fill:#0f2027,stroke:#34d399,color:#a7f3d0
+    style G1 fill:#14532d,stroke:#4ade80,color:#bbf7d0
+    style PLAN fill:#3b0764,stroke:#c084fc,color:#f3e8ff
+    style CHECK fill:#3b0764,stroke:#c084fc,color:#f3e8ff
+    style ANALYZE fill:#3b0764,stroke:#c084fc,color:#f3e8ff
+    style PA fill:#0f2027,stroke:#c084fc,color:#e9d5ff
+    style G2 fill:#14532d,stroke:#4ade80,color:#bbf7d0
+    style TASKS fill:#3b1f00,stroke:#fb923c,color:#ffedd5
+    style IMPL fill:#3b1f00,stroke:#fb923c,color:#ffedd5
+    style CONV fill:#3b1f00,stroke:#fb923c,color:#ffedd5
+    style CA fill:#0f2027,stroke:#fb923c,color:#fed7aa
+    style G3 fill:#14532d,stroke:#4ade80,color:#bbf7d0
+    style PR fill:#713f12,stroke:#facc15,color:#fef9c3
+    style SETUP fill:#0f172a,stroke:#475569,color:#94a3b8
+    style PHASE1 fill:#022c22,stroke:#34d399,color:#6ee7b7
+    style PHASE2 fill:#2e1065,stroke:#c084fc,color:#d8b4fe
+    style PHASE3 fill:#431407,stroke:#fb923c,color:#fdba74
+```
+
+---
+
 ## 🏗️ Arquitectura del Harness
 
 ```
@@ -365,43 +445,123 @@ src/
 
 ### 📊 Resumen del flujo
 
-```
-@banking-harness-agent "abrir cuenta de ahorros"
-        │
-        ▼
-  FASE 1 — Requirements ──────────────────────────────────────────────┐
-  @banking-requirements-agent                                          │
-  #enrich-banking-spec → /speckit.specify → #validate-compliance      │
-  GATE: spec.md ✅                                                     │
-        │                                                              │
-        ▼                                                         artefactos
-  FASE 2 — Architecture (SDA)                                    en specs/
-  @banking-architect-agent                                             │
-  #validate-compliance → #classify-pii-fields                         │
-  /speckit.plan → /speckit.checklist → /speckit.analyze               │
-  GATE: plan.md ✅ + sin gaps                                         │
-        │                                                              │
-        ▼                                                              │
-  FASE 3 — Development                                                 │
-  @banking-developer-agent                                             │
-  #classify-pii-fields → /speckit.tasks → /speckit.implement          │
-  /speckit.converge                                                    │
-  GATE: código ✅ + convergencia limpia                               │
-        │                                                              │
-        ▼                                                              │
-  FASE 4 — Testing                                                     │
-  @banking-tester-agent                                                │
-  #validate-compliance-coverage → tests por cada AC del spec          │
-  GATE: cobertura ≥ 80% ✅                                            │
-        │                                                              │
-        ▼                                                              │
-  FASE 5 — Security Review                                             │
-  @banking-security-agent                                              │
-  #validate-compliance + #classify-pii → security-report.md           │
-  GATE: sin CRITICAL ✅                                               │
-        │                                                              │
-        ▼                                                              │
-  /speckit.converge → PR LISTO ✅ ◄──────────────────────────────────┘
+```mermaid
+flowchart TD
+    USER["👤 Usuario\nEscribe la necesidad de negocio"]
+    ORCH["🎛️ banking-harness-agent\nOrquestador: detecta fase, coordina y verifica gates"]
+
+    subgraph F1["📋 FASE 1 — Requirements"]
+        REQ["📋 banking-requirements-agent\nCaptura la necesidad de negocio bancaria"]
+        SK1(["🔧 #enrich-banking-spec\nTransforma descripción cruda → input con KYC/AML/GDPR"])
+        SPECIFY["📝 /speckit.specify\nGenera spec.md estructurado desde descripción enriquecida"]
+        SK1B(["🔧 #validate-compliance-coverage\nVerifica cobertura KYC, AML, PCI-DSS, GDPR"])
+        CLARIFY["🔍 /speckit.clarify\nResuelve ambigüedades de compliance en el spec"]
+        A1["📄 spec.md\nEspecificación funcional completa"]
+        G1{"✅ Gate 1\n¿Compliance PASS?"}
+    end
+
+    subgraph F2["🏗️ FASE 2 — Architecture"]
+        ARC["🏛️ banking-architect-agent\nDiseña arquitectura trazable al spec (SDA)"]
+        SK2(["🔧 #validate-compliance-coverage\nConfirma KYC/AML/GDPR antes de diseñar"])
+        SK2B(["🔧 #classify-pii-fields\nClasifica campos PII / sensible / público"])
+        PLAN["📐 /speckit.plan\nGenera plan.md con arquitectura bancaria"]
+        CHECK["☑️ /speckit.checklist\nValida calidad del plan de arquitectura"]
+        ANALYZE["🔎 /speckit.analyze\nDetecta brechas entre spec y plan"]
+        A2["📄 plan.md + analysis.md\nArquitectura aprobada sin gaps críticos"]
+        G2{"✅ Gate 2\n¿Sin gaps críticos?"}
+    end
+
+    subgraph F3["💻 FASE 3 — Development"]
+        DEV["💻 banking-developer-agent\nImplementa el código Angular y el contrato API"]
+        SK3(["🔧 #classify-pii-fields\nDefine campos excluidos de logs y respuestas"])
+        TASKS["📋 /speckit.tasks\nGenera tareas ordenadas por dependencia"]
+        IMPL["⚙️ /speckit.implement\nGenera código Angular + OpenAPI"]
+        CONV["🔄 /speckit.converge\nVerifica completitud de todas las tareas"]
+        A3["📦 tasks.md + src/\nCódigo Angular + OpenAPI generados"]
+        G3{"✅ Gate 3\n¿Convergencia limpia?"}
+    end
+
+    subgraph F4["🧪 FASE 4 — Testing"]
+        TST["🧪 banking-tester-agent\nGenera tests derivados del spec y compliance"]
+        SK4(["🔧 #validate-compliance-coverage\nExtrae escenarios KYC/AML/GDPR como tests obligatorios"])
+        A4["📄 coverage-report.md\nCobertura ≥ 80% + matriz spec ↔ tests"]
+        G4{"✅ Gate 4\n¿Cobertura suficiente?"}
+    end
+
+    subgraph F5["🔒 FASE 5 — Security Review"]
+        SEC["🔒 banking-security-agent\nAudita OWASP Top 10, PCI-DSS, GDPR, KYC/AML"]
+        SK5(["🔧 #validate-compliance-coverage\nObtiene línea base regulatoria completa"])
+        SK5B(["🔧 #classify-pii-fields\nVerifica encriptación y ausencia de PII en logs"])
+        CONV2["🔄 /speckit.converge\nConvergencia final antes del PR"]
+        A5["📄 security-report.md\n🔴 CRITICAL / 🟠 HIGH / 🟡 MEDIUM / 🔵 LOW"]
+        G5{"✅ Gate 5\n¿Sin hallazgos CRITICAL?"}
+    end
+
+    PR["🎉 PR Listo\nTrazabilidad completa: negocio → spec → arquitectura → código → tests → seguridad"]
+
+    USER --> ORCH
+    ORCH --> REQ
+    REQ --> SK1 --> SPECIFY --> SK1B --> CLARIFY --> A1 --> G1
+    G1 -->|"❌ gaps"| CLARIFY
+    G1 -->|"✅ aprobado"| ARC
+    ARC --> SK2 --> SK2B --> PLAN --> CHECK --> ANALYZE --> A2 --> G2
+    G2 -->|"❌ gaps"| PLAN
+    G2 -->|"✅ ok"| DEV
+    DEV --> SK3 --> TASKS --> IMPL --> CONV --> A3 --> G3
+    G3 -->|"❌ incompleto"| IMPL
+    G3 -->|"✅ converge"| TST
+    TST --> SK4 --> A4 --> G4
+    G4 -->|"❌ cobertura baja"| TST
+    G4 -->|"✅ ok"| SEC
+    SEC --> SK5 --> SK5B --> A5 --> G5
+    G5 -->|"🔴 CRITICAL"| SEC
+    G5 -->|"✅ limpio"| CONV2 --> PR
+
+    style USER fill:#0f172a,stroke:#38bdf8,color:#e0f2fe
+    style ORCH fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+    style PR fill:#713f12,stroke:#facc15,color:#fef9c3
+
+    style REQ fill:#064e3b,stroke:#34d399,color:#d1fae5
+    style SPECIFY fill:#064e3b,stroke:#34d399,color:#d1fae5
+    style CLARIFY fill:#064e3b,stroke:#34d399,color:#d1fae5
+    style ARC fill:#3b0764,stroke:#c084fc,color:#f3e8ff
+    style PLAN fill:#3b0764,stroke:#c084fc,color:#f3e8ff
+    style CHECK fill:#3b0764,stroke:#c084fc,color:#f3e8ff
+    style ANALYZE fill:#3b0764,stroke:#c084fc,color:#f3e8ff
+    style DEV fill:#3b1f00,stroke:#fb923c,color:#ffedd5
+    style TASKS fill:#3b1f00,stroke:#fb923c,color:#ffedd5
+    style IMPL fill:#3b1f00,stroke:#fb923c,color:#ffedd5
+    style CONV fill:#3b1f00,stroke:#fb923c,color:#ffedd5
+    style TST fill:#172554,stroke:#60a5fa,color:#dbeafe
+    style SEC fill:#450a0a,stroke:#f87171,color:#fee2e2
+    style CONV2 fill:#450a0a,stroke:#f87171,color:#fee2e2
+
+    style SK1 fill:#1e293b,stroke:#94a3b8,color:#e2e8f0
+    style SK1B fill:#1e293b,stroke:#94a3b8,color:#e2e8f0
+    style SK2 fill:#1e293b,stroke:#94a3b8,color:#e2e8f0
+    style SK2B fill:#1e293b,stroke:#94a3b8,color:#e2e8f0
+    style SK3 fill:#1e293b,stroke:#94a3b8,color:#e2e8f0
+    style SK4 fill:#1e293b,stroke:#94a3b8,color:#e2e8f0
+    style SK5 fill:#1e293b,stroke:#94a3b8,color:#e2e8f0
+    style SK5B fill:#1e293b,stroke:#94a3b8,color:#e2e8f0
+
+    style A1 fill:#0f2027,stroke:#34d399,color:#a7f3d0
+    style A2 fill:#0f2027,stroke:#c084fc,color:#e9d5ff
+    style A3 fill:#0f2027,stroke:#fb923c,color:#fed7aa
+    style A4 fill:#0f2027,stroke:#60a5fa,color:#bfdbfe
+    style A5 fill:#0f2027,stroke:#f87171,color:#fecaca
+
+    style G1 fill:#14532d,stroke:#4ade80,color:#bbf7d0
+    style G2 fill:#14532d,stroke:#4ade80,color:#bbf7d0
+    style G3 fill:#14532d,stroke:#4ade80,color:#bbf7d0
+    style G4 fill:#14532d,stroke:#4ade80,color:#bbf7d0
+    style G5 fill:#14532d,stroke:#4ade80,color:#bbf7d0
+
+    style F1 fill:#022c22,stroke:#34d399,color:#6ee7b7
+    style F2 fill:#2e1065,stroke:#c084fc,color:#d8b4fe
+    style F3 fill:#431407,stroke:#fb923c,color:#fdba74
+    style F4 fill:#0c1a3d,stroke:#60a5fa,color:#93c5fd
+    style F5 fill:#3b0a0a,stroke:#f87171,color:#fca5a5
 ```
 
 ---
@@ -497,3 +657,4 @@ src/
 ---
 
 *Generado con GitHub Copilot CLI · Powered by GitHub Spec Kit · Banking Domain Demo*
+
