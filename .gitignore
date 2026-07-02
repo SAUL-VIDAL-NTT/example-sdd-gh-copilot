@@ -1,0 +1,43 @@
+# ── Node / Angular ──────────────────────────────────────────────
+node_modules/
+dist/
+.angular/
+.nx/
+
+# ── Python / Spec Kit CLI ────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# ── IDEs ─────────────────────────────────────────────────────────
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.suo
+*.user
+
+# ── OS ───────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Logs y temporales ────────────────────────────────────────────
+*.log
+*.tmp
+*.bak
+coverage/
+.nyc_output/
+
+# ── Secretos y credenciales ──────────────────────────────────────
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets.json
+
+# ── Spec Kit — estado local (no compartir entre devs) ────────────
+.specify/cache/
+.specify/tmp/
